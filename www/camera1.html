@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Camera</title>
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.mobile-1.4.5.min.css" />
+<script type="text/javascript" src="js/cordova.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="js/prop.js"></script>
+<script type="text/javascript" src="js/circles.js"></script>
+<script type="text/javascript" charset="utf-8">
+	var imageURIGlobal;
+	// Wait for device API libraries to load
+	// Wait for PhoneGap to load
+	document.addEventListener("deviceready", onDeviceReady, false);
+	// PhoneGap is ready
+	function onDeviceReady() {
+		// Do cool things here...
+	}
+
+	function uploadFromGallery() {
+		imageURIGlobal = null;
+		// Retrieve image file location from specified source
+		navigator.camera.getPicture(uploadPhoto, function(message) {
+			alert('get picture failed');
+		}, {
+			quality : 50,
+			destinationType : navigator.camera.DestinationType.FILE_URI,
+			sourceType : navigator.camera.PictureSourceType.PHOTOLIBRARY
+		});
+
+	}
+
+	function uploadPhoto(imageURI) {
+		console.log("src " + imageURI);
+		$("#popImage").attr("src", imageURI);
+		imageURIGlobal = imageURI;
+		console.log("completed");
+	}
+
+	function upload() {
+		if (imageURIGlobal != null) {
+			var ft = new FileTransfer();
+			var imageURI = imageURIGlobal;
+			var options = new FileUploadOptions();
+			options.fileKey = "file";
+			options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false;
+			options.headers = {
+				Connection : "close"
+			};
+
+			var userdetail = window.localStorage.getItem("userdetail");
+			userdetail = JSON.parse(userdetail);
+			// setup parameters
+			var params = {};
+			params.fullpath = imageURI;
+			params.name = options.fileName;
+			params.id = userdetail.uid;
+
+			options.params = params;
+
+			$.mobile.loading("show", {
+				theme : "b",
+				text : "Loading",
+				textVisible : true
+			});
+
+			ft.upload(encodeURI(imageURIGlobal),
+					encodeURI(appurl+"image.php"),
+					win, fail, options);
+		} else {
+			alert("Image Not Selected");
+		}
+	}
+
+	function win(r) {
+		$.mobile.loading('hide');
+		//	console.log("Code = " + r.responseCode);
+		//  console.log("Response = " + r.response);
+		//	console.log("Sent = " + r.bytesSent);
+		if (r.response != "failure") {
+			var userdetail = window.localStorage.getItem("userdetail");
+			userdetail = JSON.parse(userdetail);
+
+			$.post(appurl+"imageselect.php", {
+				id : userdetail.uid
+			}, function(data) {
+				$(document).ready(
+						function() {
+							$("#popImage").attr("src",
+									"data:image/jpeg;base64," + data);
+						});
+
+			}
+
+			);
+
+		} else {
+			alert("Image not uploaded to server");
+		}
+	}
+
+	function fail(error) {
+		$.mobile.loading('hide');
+		console.log("An error has occurred: Code = " + error.code);
+		console.log("upload error source " + error.source);
+		console.log("upload error target " + error.target);
+	}
+
+	
+</script>
+</head>
+</head>
+<body>
+	<div data-url="demo-page" data-role="page" id="demo-page">
+		<div data-role="header" data-theme="b">
+			<h1>Circles</h1>
+
+			<a href="#" data-icon="home" data-iconpos="notext" onclick="home();">Home</a>
+			<a href="#" data-icon="power" data-iconpos="notext"
+				onclick="logout();">Logout</a>
+			
+		</div>
+		<!-- /header -->
+		<div data-role="footer" style="overflow: hidden;"
+			data-position="fixed">
+			<div data-role="navbar" data-iconpos="bottom">
+				<ul>
+
+					<li><a href="#" data-icon="search" onclick="searchfrd();">New
+							Friend</a></li>
+					<li><a href="#" data-icon="user" onclick="frdLst();">Friends</a></li>
+					<li><a href="#" data-icon="navigation" onclick="frdMap();">Circles</a></li>
+					<li><a data-icon="star" onclick="notificationDetail();"> <span
+							class="count"></span> Star
+					</a></li>
+
+				</ul>
+			</div>
+		</div>
+
+		<div data-role="main" class="ui-content">
+
+			<a data-role="button" onClick="uploadFromGallery();">Select From
+				Gallery</a> <a data-role="button" onClick="upload();">Update Profile Pic</a>
+			<div style="text-align: center;">
+				<img class="popphoto" id="popImage" src="image/frd.png"
+					style="width: 250px; height: 250px;">
+			</div>
+
+		</div>
+
+	</div>
+</body>
+</html>

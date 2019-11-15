@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.mobile-1.4.5.min.css" />
+<script type="text/javascript" src="js/cordova.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="js/prop.js"></script>
+<script type="text/javascript" src="js/circles.js"></script>
+<script type="text/javascript" charset="utf-8">
+	// Wait for device API libraries to load
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	// device APIs are available
+	function onDeviceReady() {
+		$("#btnSubmit").click(function() {
+			//collect userName and password entered by users
+			var userName = $("#username").val();
+			var password = $("#password").val();
+
+			//ajax loading
+			$.mobile.loading("show", {
+		      theme: "b",
+		      text: "Loading",
+		      textVisible: true
+		   });
+
+			//call the authenticate function
+			authenticate(userName, password);
+		});
+	}
+
+</script>
+</head>
+
+<div data-role="page">
+	<div data-role="header">
+		<h1>Login Circles</h1>
+	</div>
+
+	<div data-role="main" class="ui-content">
+
+		<label for="username"> Username: <input type="text"
+			name="username" id="username" maxlength="8" required="required" />
+		</label> <label for="password"> Password: <input type="password"
+			name="password" id="password" maxlength="10" required="required" />
+		</label>
+
+
+		<div id="btn" style="text-align: center;">
+			<button id="btnSubmit">Sign in</button>
+		</div>
+		<div id="error" style="text-align: center; color: red;"></div>
+
+	</div>
+
+
+	<div data-role="footer" style="overflow: hidden;" data-position="fixed">
+		<h4>Copyright @ Circles Inc.,</h4>
+	</div>
+
+</div>
+</html>

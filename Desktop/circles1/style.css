@@ -1,0 +1,253 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+/* Above, the asterisk selects all elements in the HTML document and rests the margin and padding. This ensures that any of the annoying "default" margin and paddings a browser might have will be reset to zero. */
+
+#noti_Container {
+    position:relative;     /* This is crucial for the absolutely positioned element */
+    border:1px solid blue; /* This is just to show you where the container ends */
+    width:16px;
+    height:16px;
+}
+.noti_bubble {
+    position:absolute;    /* This breaks the div from the normal HTML document. */
+    top: -6px;
+    right:-6px;
+    padding:1px 2px 1px 2px;
+    background-color:red; /* you could use a background image if you'd like as well */
+    color:white;
+    font-weight:bold;
+    font-size:0.55em;
+
+    /* The following is CSS3, but isn't crucial for this technique to work. */
+    /* Keep in mind that if a browser doesn't support CSS3, it's fine! They just won't have rounded borders and won't have a box shadow effect. */
+    /* You can always use a background image to produce the same effect if you want to, and you can use both together so browsers without CSS3 still have the rounded/shadow look. */
+    border-radius:30px;
+    box-shadow:1px 1px 1px gray;
+}
+
+* {
+        margin: 0;
+        padding: 0;
+        outline: none;
+        
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+    body {
+        background: #eee;
+        color: #444;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Open Sans", Arial, Helvetica, Geneva, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        height: auto !important;
+        height: 100%;
+        line-height: 1.6em;
+        min-height: 100%;
+    }
+    
+    h2 {
+        color: rgb(34,34,34);
+        font-size: 2.2em;   
+        font-weight: 200;
+        margin: 0 0 24px 0;
+    }
+    
+    /*BUTTON DESIGN*/
+    [class*='btn-'] {
+        border: none;
+        border-bottom: 2px solid rgba(0,0,0,.15);
+        border-top: 1px solid rgba(255,255,255,.15);
+        border-radius: 3px;
+        color: #fff;
+        display: inline-block;
+        font: -webkit-small-control;
+        font-size: .7em;
+        letter-spacing: 1px;
+        line-height: 140%;
+        padding: 10px 20px;
+        text-decoration: none;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+        text-transform: uppercase;
+        
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        -o-transition: all 0.1s linear;
+          transition: all 0.1s linear;
+    }
+    
+        .btn-minimal {
+        background-color: rgb(255,255,255);
+        border-radius: 0;
+        border: 1px solid rgb( 186, 186, 186 );
+        color: rgb( 186, 186, 186 );
+        text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+    }
+    
+        .btn-minimal:hover {
+            background-color: #4195fc;
+            border: 1px solid rgba(0,0,0,.1);
+            color: rgb(255,255,255);
+            cursor: pointer;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+        }
+        
+        .btn-minimal:active {
+            box-shadow: 0 1px 1px rgba(0,0,0,0.15) inset;
+            text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+        }
+    
+    /*SECTION CONTAINER*/
+    section#loginBox {
+        background-color: rgb(255,255,255);
+   border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 0 4px rgba(0,0,0,0.2);
+        margin: 40px auto; /*aligns center*/
+        padding: 24px;
+        width: 500px;
+    }
+    
+    /*FORM*/
+    div.minimal label {
+        display: block;
+        margin: 6px 0;  
+    }
+    
+        div.minimal input[type="text"],
+        div.minimal input[type="email"],
+        div.minimal input[type="number"],
+        div.minimal input[type="search"],
+        div.minimal input[type="password"],
+        div.minimal textarea {
+            background-color: rgb(255,255,255);
+            border: 1px solid rgb( 186, 186, 186 );
+            border-radius: 2px;
+            -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+            -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+              box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+            display: block;
+            font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, 'lucida grande', tahoma, verdana, arial, sans-serif;
+            font-size: 14px;
+            margin: 6px 0 12px 0;
+            padding: 8px;   
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+            width: 90%;
+            
+            -webkit-transition: all 0.1s linear;
+            -moz-transition: all 0.1s linear;
+            -o-transition: all 0.1s linear;
+              transition: all 0.1s linear;
+        }
+        
+        div.minimal input[type="text"]:focus,
+        div.minimal input[type="email"]:focus,
+        div.minimal input[type="number"]:focus,
+        div.minimal input[type="search"]:focus,
+        div.minimal input[type="password"]:focus,
+        div.minimal textarea:focus,
+        div.minimal select:focus { 
+            border-color: #4195fc;
+            -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px #4195fc;
+            -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px #4195fc;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px #4195fc;
+            color: rgb(0,0,0);
+        }
+        
+            div.minimal input[type="text"]:invalid:focus,
+            div.minimal input[type="email"]:invalid:focus,
+            div.minimal input[type="number"]:invalid:focus,
+            div.minimal input[type="search"]:invalid:focus,
+            div.minimal input[type="password"]:invalid:focus,
+            div.minimal textarea:invalid:focus,
+            div.minimal select:invalid:focus { 
+                border-color: rgb(248,66,66);
+                -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px rgb(248,66,66);
+                -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px rgb(248,66,66);
+                  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 8px rgb(248,66,66);
+            }
+
+p {
+  color: rgba(0,0,0,.8)
+  font-size: .8em;
+  margin: 0 0 24px 0;
+}
+
+html,body,#map-canvas {
+	height: 100%;
+	margin: 0px;
+	padding: 0px
+}
+
+/* Swipe works with mouse as well but often causes text selection. */
+/* We'll deny text selecton on everything but INPUTs and TEXTAREAs. */
+#demo-page :not(INPUT):not(TEXTAREA) {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+/* Content styling. */
+dl {
+	font-family: "Times New Roman", Times, serif;
+	padding: 1em;
+}
+
+dt {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+dt span {
+	font-size: .5em;
+	color: #777;
+	margin-left: .5em;
+}
+
+dd {
+	font-size: 1.25em;
+	margin: 1em 0 0;
+	padding-bottom: 1em;
+	border-bottom: 1px solid #eee;
+}
+
+.back-btn {
+	float: right;
+	margin: 0 2em 1em 0;
+}
+
+*{
+    margin:0;
+    padding:0;
+}
+
+/* Above, the asterisk selects all elements in the HTML document and rests the margin and padding. This ensures that any of the annoying "default" margin and paddings a browser might have will be reset to zero. */
+
+#noti_Container {
+    position:relative;     /* This is crucial for the absolutely positioned element */
+    border:1px solid blue; /* This is just to show you where the container ends */
+    width:16px;
+    height:16px;
+}
+.noti_bubble {
+    position:absolute;    /* This breaks the div from the normal HTML document. */
+    top: -6px;
+    right:-6px;
+    padding:1px 2px 1px 2px;
+    background-color:red; /* you could use a background image if you'd like as well */
+    color:white;
+    font-weight:bold;
+    font-size:0.55em;
+
+    /* The following is CSS3, but isn't crucial for this technique to work. */
+    /* Keep in mind that if a browser doesn't support CSS3, it's fine! They just won't have rounded borders and won't have a box shadow effect. */
+    /* You can always use a background image to produce the same effect if you want to, and you can use both together so browsers without CSS3 still have the rounded/shadow look. */
+    border-radius:30px;
+    box-shadow:1px 1px 1px gray;
+}

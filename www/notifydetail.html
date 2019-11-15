@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/login.css" />
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.mobile-1.4.5.min.css" />
+<script type="text/javascript" src="js/cordova.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="js/prop.js"></script>
+<script type="text/javascript" src="js/circles.js"></script>
+<script type="text/javascript" charset="utf-8">
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	// device APIs are available
+	function onDeviceReady() {
+
+		var notifydetail = window.localStorage.getItem("notifyDetal");
+		notifydetail = JSON.parse(notifydetail);
+
+		$.each(notifydetail, function(i, searchfrd) {
+			$("#notDetail").append(
+					"<li id="+searchfrd.uid+"><a href='#'><h1>" + searchfrd.username
+							+ "</h1><p> <a href='#' class='ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check' onclick='accept(" + searchfrd.uid
+							+ ");'>Accept</a> <a href='#' class='ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-delete' onclick='cancel("
+							+ searchfrd.uid + ");'>Cancel</a></p></li>");
+		});
+		$("#notDetail").listview("refresh");
+	}
+
+</script>
+</head>
+<body>
+
+	<!-- Page Start -->
+	<div data-url="demo-page" data-role="page" id="demo-page">
+		<div data-role="header" data-theme="b" >
+			<h1>Circles</h1>
+		</div>
+		<div data-role="header" style="overflow: hidden;">
+			<div data-role="navbar" data-iconpos="bottom">
+				<ul>
+					<li><a href="#" data-icon="home" onclick="home();">Home</a></li>
+					<li><a href="#" data-icon="search" onclick="searchfrd();">Search
+							Friend</a></li>
+
+					<li><a href="#" data-icon="user" onclick="frdLst();">Frnd</a></li>
+					<li><a href="#" data-icon="navigation" onclick="frdMap();">Circle</a></li>
+					<li><a href="#" data-icon="power" onclick="logout();">Logout</a></li>
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+		<!-- /header -->
+		<div role="main" class="ui-content">
+		
+			</br>
+			<ul id="notDetail" data-role="listview">
+			</ul>
+			</br>
+			<button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home" onclick="home()">home</button>
+			
+			
+		</div>
+		
+	</div>
+
+</body>
+</html>

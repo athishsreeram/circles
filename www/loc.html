@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/login.css" />
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.mobile-1.4.5.min.css" />
+<script type="text/javascript" src="js/cordova.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	// device APIs are available
+	function onDeviceReady() {
+
+		$(document).on("swipeleft swiperight", "#demo-page", function(e) {
+			// We check if there is no open panel on the page because otherwise
+			// a swipe to close the left panel would also open the right panel (and v.v.).
+			// We do this by checking the data that the framework stores on the page element (panel: open).
+			if ($(".ui-page-active").jqmData("panel") !== "open") {
+				if (e.type === "swipeleft") {
+					$("#right-panel").panel("open");
+				} else if (e.type === "swiperight") {
+					$("#left-panel").panel("open");
+				}
+			}
+		});
+
+		console.time("concatenation");
+
+		var userdetail = window.localStorage.getItem("userdetail");
+		userdetail = JSON.parse(userdetail);
+
+		map = showMap(userdetail.lat, userdetail.lng);
+		addMarkersToMap(map, userdetail.lat, userdetail.lng,
+				userdetail.username);
+
+		console.timeEnd("concatenation");
+
+	}
+
+	function findFriend() {
+		var mapLst = window.localStorage.getItem("mapLst");
+		mapLst = JSON.parse(mapLst);
+
+		var userdetail = window.localStorage.getItem("userdetail");
+		userdetail = JSON.parse(userdetail);
+		map = showMap(userdetail.lat, userdetail.lng);
+		addMarkersToMap(map, userdetail.lat, userdetail.lng,
+				userdetail.username);
+		$.each(mapLst, function(index, element) {
+			addMarkersToMap(map, element.lat, element.lng, element.username);
+		});
+	}
+
+	var addMarkersToMap = function(map, lat, lag, name) {
+		var latitudeAndLongitudeOne = new google.maps.LatLng(lat, lag);
+
+		var markerOne = new google.maps.Marker({
+			position : latitudeAndLongitudeOne,
+			map : map,
+			title : name
+		});
+
+	}
+
+	var showMap = function(lat, lag) {
+		var mapOptions = {
+			zoom : 17,
+			center : new google.maps.LatLng(lat, lag),
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById("map_canvas"),
+				mapOptions);
+		return map;
+	}
+
+	function back() {
+		window.location.href = "http://localhost/circles/friend/cricleshome.php";
+	}
+</script>
+</head>
+<body>
+
+	<!-- Page Start -->
+	<div data-url="demo-page" data-role="page" id="demo-page">
+		<div data-role="header" data-theme="b">
+			<h1>Circles</h1>
+			<a href="#left-panel" data-icon="carat-r" data-iconpos="notext"
+				data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open
+				left panel</a> <a href="#right-panel" data-icon="carat-l"
+				data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+				class="ui-nodisc-icon">Open right panel</a>
+		</div>
+		<!-- /header -->
+		<div role="main" class="ui-content">
+
+			<h3>Circles</h3>
+			<div style="width: 100%; height: 400px" id="map_canvas"></div>
+			<form>
+				<input type="button" value="Find Friends" onclick="findFriend();" />
+				<input type="button" value="Back" onclick="back();" />
+			</form>
+
+			<!-- <a href="#demo-intro" data-rel="back"
+					class="back-btn ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-back ui-btn-icon-right">Back
+					to demo intro</a> -->
+		</div>
+		<!-- /content -->
+		<div data-role="panel" id="left-panel" data-theme="b">
+			<!-- <a href="#" data-rel="close"
+					class="ui-btn">Close</a>
+				 -->
+			<ul data-role="listview">
+
+				<li><a href="" onclick="searchfrd()"
+					class="ui-btn">Search
+						Friend</a></li>
+
+				<li><a href="" onclick="frdLst()"
+					class="ui-btn">Friends</a>
+				</li>
+			</ul>
+		</div>
+		<!-- /panel -->
+		<div data-role="panel" id="right-panel" data-display="push"
+			data-position="right" data-theme="b">
+			Circles
+			<!-- <a href="#" data-rel="close"
+					class="ui-btn">Close</a>
+	 -->
+			<p>
+				<a href="#"
+					class="ui-btn"
+					onclick="logout()">Logout</a>
+			</p>
+		</div>
+		<!-- /panel -->
+	</div>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/login.css" />
+<script type="text/javascript" src="js/cordova.js"></script>
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+<link href="css/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" charset="utf-8">
+	// Wait for device API libraries to load
+	//-
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	// device APIs are available
+	//
+	function onDeviceReady() {
+		console.time("concatenation");
+		
+		var userdetail = window.localStorage.getItem("userdetail");
+		userdetail = JSON.parse(userdetail);
+		
+		map = showMap(userdetail.lat,userdetail.lng);
+		addMarkersToMap(map,userdetail.lat,userdetail.lng,userdetail.username);
+		
+		console.timeEnd("concatenation");
+	}
+
+	function findFriend() {
+		var mapLst = window.localStorage.getItem("mapLst");
+		mapLst = JSON.parse(mapLst);
+		
+		var userdetail = window.localStorage.getItem("userdetail");
+		userdetail = JSON.parse(userdetail);
+		map = showMap(userdetail.lat,userdetail.lng);
+		addMarkersToMap(map,userdetail.lat,userdetail.lng,userdetail.username);
+		$.each(mapLst, function(index, element) {
+			addMarkersToMap(map,element.lat,element.lng,element.username);
+		});
+	}
+
+	var addMarkersToMap = function(map, lat, lag,name) {
+		var latitudeAndLongitudeOne = new google.maps.LatLng(lat, lag);
+
+		var markerOne = new google.maps.Marker({
+			position : latitudeAndLongitudeOne,
+			map : map,
+			title : name
+		});
+			
+	}
+
+	var showMap = function(lat,lag) {
+		var mapOptions = {
+			zoom : 17,
+			center : new google.maps.LatLng(lat, lag),
+			mapTypeId : google.maps.MapTypeId.ROADMAP
+		}
+		var map = new google.maps.Map(document.getElementById("map_canvas"),
+				mapOptions);
+		return map;
+	}
+
+	function back(){
+		window.location.href = "http://localhost/circles/friend/cricleshome.php";
+	}
+</script>
+</head>
+<body onload="test()">
+	<h3>Circles</h3>
+	<div style="width: 100%; height: 400px" id="map_canvas"></div>
+	<form>
+	<input type="button" value="Find Friends" onclick="findFriend();" />
+	<input type="button" value="Back" onclick="back();" />
+	</form>
+</body>
+</html> -->

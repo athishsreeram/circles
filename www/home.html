@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+<link rel="stylesheet" type="text/css"
+	href="css/jquery.mobile-1.4.5.min.css" />
+<script type="text/javascript" src="js/cordova.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src="js/prop.js"></script>
+<script type="text/javascript" src="js/circles.js"></script>
+<script type="text/javascript" charset="utf-8">
+	// Wait for device API libraries to load
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	var shareFlg = true;
+	var onoff;
+	var interval;
+
+	// device APIs are available
+	function onDeviceReady() {
+		/* $(document).on("swipeleft swiperight", "#demo-page", function(e) {
+			// We check if there is no open panel on the page because otherwise
+			// a swipe to close the left panel would also open the right panel (and v.v.).
+			// We do this by checking the data that the framework stores on the page element (panel: open).
+			if ($(".ui-page-active").jqmData("panel") !== "open") {
+				if (e.type === "swipeleft") {
+					$("#right-panel").panel("open");
+				} else if (e.type === "swiperight") {
+					$("#left-panel").panel("open");
+				}
+			}
+		}); */
+
+		if (shareFlg) {
+			share();
+			shareFlg = false;
+		}
+
+		$("#error").html("");
+
+		var userdetail = window.localStorage.getItem("userdetail");
+		userdetail = JSON.parse(userdetail);
+		$("#username").html($("#username").html() + " " + userdetail.username);
+
+		setInterval(function() {
+			notificationDisplay();
+		}, 3000);
+	}
+</script>
+</head>
+<body>
+
+	<!-- Page Start -->
+	<div data-url="demo-page" data-role="page" id="demo-page">
+		<div data-role="header" data-theme="b">
+			<h1>Circles</h1>
+
+			<a href="#" data-icon="home" data-iconpos="notext" onclick="home();">Home</a>
+			<a href="#" data-icon="power" data-iconpos="notext"
+				onclick="logout();">Logout</a>
+			
+		</div>
+		<!-- /header -->
+		<div data-role="footer" style="overflow: hidden;"
+			data-position="fixed">
+			<div data-role="navbar" data-iconpos="bottom">
+				<ul>
+
+					<li><a href="#" data-icon="search" onclick="searchfrd();">New
+							Friend</a></li>
+					<li><a href="#" data-icon="user" onclick="frdLst();">Friends</a></li>
+					<li><a href="#" data-icon="navigation" onclick="frdMap();">Circles</a></li>
+					<li><a data-icon="star" onclick="notificationDetail();">
+								<span class="count"></span>
+							Star</a></li>
+
+				</ul>
+			</div>
+			<!-- /navbar -->
+		</div>
+
+		<div data-role="main" class="ui-content">
+
+			<div id="error" style="color: red; text-align: center;"
+				class="ui-content"></div>
+
+			<h3>Welcome</h3>
+			<h1 id="username">Hi</h1>
+
+			<div data-role="navbar" data-iconpos="bottom">
+				<ul>
+
+					<li><a href="#" data-icon="forward" onclick='share()'>Share
+							Location</a></li>
+					<li><select name="flip" id="flip" data-role="slider"  onchange="onoffFun(this);">
+							<option value="0">Off</option>
+							<option value="1">On</option>
+					</select></li>
+				</ul>
+			</div>
+
+			<div data-role="navbar" data-iconpos="bottom">
+				<ul>
+					<li><a href="#" data-icon="camera" onclick='camera()'>camera</a>
+					</li>
+					<li><a href="#" data-icon="camera" onclick='camera1()'>camera1</a>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>
+
